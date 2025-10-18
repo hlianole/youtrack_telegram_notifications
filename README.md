@@ -67,3 +67,17 @@ without waiting. Can be used without starting the polling
 
 `/create <project-id-(short-name)> <summary>` will create a new issue for the project
 <project-id-(short-name)> with the summary provided in <summary>
+
+## Screenshots:
+
+![image](pic/screenshot1.png)
+___
+![image](pic/screenshot2.png)
+___
+![image](pic/screenshot3.png)
+___
+![image](pic/screenshot4.png)
+___
+![image](pic/screenshot5.png)
+___
+![image](pic/screenshot6.png)
