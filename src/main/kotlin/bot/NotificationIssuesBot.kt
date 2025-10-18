@@ -6,6 +6,9 @@ import com.hlianole.jetbrains.internship.youtrack_telegram.model.ChatPollingStat
 import io.ktor.util.collections.*
 import java.util.concurrent.ConcurrentHashMap
 
+/**
+ * Abstract class to separate some logic from the [TelegramBot]
+ * */
 abstract class NotificationIssuesBot(
     chatIds: Set<Long>,
     private val apiClient: YouTrackApiClient

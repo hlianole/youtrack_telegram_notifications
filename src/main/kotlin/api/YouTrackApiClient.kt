@@ -12,6 +12,9 @@ import kotlinx.serialization.json.Json
 import java.util.*
 import java.util.zip.GZIPInputStream
 
+/**
+ * Api Client
+ * */
 class YouTrackApiClient(
     private val baseUrl: String,
     private val token: String
@@ -45,7 +48,6 @@ class YouTrackApiClient(
             println("   response.status: ${response.status.value}")
 
             response.body<List<NotificationApi>>().map {
-                println("READ: " + it.read)
                 it.toDomain()
             }
         } catch (e: Exception) {

@@ -7,6 +7,9 @@ import kotlinx.coroutines.*
 
 fun main() {
 
+    /**
+    * Configuration values
+    * */
     val config = ConfigFactory.load()
     val youTrackUrl = config.getString("youtrack.url")
     val youTrackToken = config.getString("youtrack.token")
@@ -43,6 +46,9 @@ fun main() {
 
     telegramBot.start()
 
+    /**
+    * Main job, polling. Every 5 seconds checks if there is need to check for the notifications
+    * */
     val pollingJob = CoroutineScope(Dispatchers.Default).launch {
         println("--- Main: Starting polling job ---")
         while (isActive) {
@@ -59,8 +65,8 @@ fun main() {
                 try {
                     chatState.lastPolledAt = timeNow
                     telegramBot.sendNotifications(chatId = chatState.chatId)
-                } catch (_: Exception) {
-                    // TODO
+                } catch (e: Exception) {
+                    println("--- !!! Main: Polling job error !!! --- \n${e.message}")
                 }
             }
             delay(5000)

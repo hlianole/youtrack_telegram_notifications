@@ -3,12 +3,14 @@ package com.hlianole.jetbrains.internship.youtrack_telegram.bot
 import com.github.kotlintelegrambot.bot
 import com.github.kotlintelegrambot.dispatch
 import com.github.kotlintelegrambot.dispatcher.command
-import com.github.kotlintelegrambot.dispatcher.text
 import com.github.kotlintelegrambot.entities.ChatId
 import com.github.kotlintelegrambot.entities.ParseMode
 import com.hlianole.jetbrains.internship.youtrack_telegram.api.YouTrackApiClient
 import com.hlianole.jetbrains.internship.youtrack_telegram.model.ChatPollingState
 
+/**
+ * Telegram Bot
+ * */
 class TelegramBot(
     private val token: String,
     private val chatIds: Set<Long>,
@@ -139,19 +141,12 @@ class TelegramBot(
                     parseMode = ParseMode.MARKDOWN
                 )
             }
-
-            text {
-                val chatId = ChatId.fromId(message.chat.id)
-                if (!chatIds.contains(chatId.id)) {
-                    sendNotAllowedMessage(chatId)
-                }
-            }
         }
     }
 
     private fun sendNotAllowedMessage(chatId: ChatId) {
         val message = """
-            |You are not allowed to use this bot.
+            |You are not allowed to use this bot
         """.trimMargin()
 
         bot.sendMessage(
@@ -197,6 +192,9 @@ class TelegramBot(
         }
     }
 
+    /**
+    * Takes the list of [ChatPollingState] for the Main job. Filters only active
+    * */
     fun getActiveChatStates(): List<ChatPollingState> {
         return chatStates.values
             .asSequence()
