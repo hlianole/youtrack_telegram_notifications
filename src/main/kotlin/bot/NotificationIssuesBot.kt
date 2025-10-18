@@ -88,9 +88,7 @@ abstract class NotificationIssuesBot(
         }
 
         return if (notSeen.isEmpty()) {
-            listOf("""
-                    |No recent notifications
-                """.trimMargin())
+            emptyList()
         } else {
             notSeen.map {
                 seenNotifications.add(it.id)

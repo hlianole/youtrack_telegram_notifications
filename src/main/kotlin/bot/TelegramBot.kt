@@ -99,10 +99,20 @@ class TelegramBot(
                     return@command
                 }
                 val messages = commandNotifications()
-                messages.forEach { message ->
+                if (messages.isNotEmpty()) {
+                    messages.forEach { message ->
+                        bot.sendMessage(
+                            chatId = chatId,
+                            text = message,
+                            parseMode = ParseMode.MARKDOWN
+                        )
+                    }
+                } else {
                     bot.sendMessage(
                         chatId = chatId,
-                        text = message,
+                        text = """
+                            |No recent notifications found
+                        """.trimMargin(),
                         parseMode = ParseMode.MARKDOWN
                     )
                 }
@@ -181,14 +191,6 @@ class TelegramBot(
                     parseMode = ParseMode.MARKDOWN
                 )
             }
-        } else {
-            bot.sendMessage(
-                chatId = chatId,
-                text = """
-                    |No notifications found
-                """.trimMargin(),
-                parseMode = ParseMode.MARKDOWN
-            )
         }
     }
 
