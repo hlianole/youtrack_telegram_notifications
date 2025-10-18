@@ -45,11 +45,11 @@ abstract class NotificationIssuesBot(
         return if (chatStates[chatId]?.isActive == false) {
             chatStates[chatId]?.isActive = true
             """
-                |Stated polling
+                |Started polling
             """.trimMargin()
         } else {
             """
-                |Reject. Pooling already started
+                |Reject. Polling already started
             """.trimMargin()
         }
     }
@@ -57,7 +57,7 @@ abstract class NotificationIssuesBot(
     protected fun commandStopNotifying(chatId: ChatId): String {
         return if (chatStates[chatId]?.isActive == false) {
             """
-                |Reject. Pooling not yet started or already stopped
+                |Reject. Polling not yet started or already stopped
             """.trimMargin()
         } else {
             chatStates[chatId]?.isActive = false
