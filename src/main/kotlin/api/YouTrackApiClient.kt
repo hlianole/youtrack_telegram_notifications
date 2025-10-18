@@ -31,7 +31,6 @@ class YouTrackApiClient(
 
     suspend fun getNotifications(): List<Notification> {
         return try {
-            println("\n--- ApiClient: getNotifications() ---")
             val response = client.get("$baseUrl/api/users/notifications") {
                 accept(ContentType.Application.Json)
                 bearerAuth(token)
@@ -45,20 +44,17 @@ class YouTrackApiClient(
                 )
             }
 
-            println("   response.status: ${response.status.value}")
-
             response.body<List<NotificationApi>>().map {
                 it.toDomain()
             }
         } catch (e: Exception) {
-            println("   error: ${e.message}")
+            println("--- !!! ApiClient: getNotifications() error !!! ---\n${e.message}")
             emptyList()
         }
     }
 
     suspend fun createIssue(projectId: String, summary: String): Issue? {
         return try {
-            println("\n--- ApiClient: createIssue() ---")
             val request = IssueCreationRequest(
                 summary = summary,
                 project = ProjectIdReference(
@@ -77,18 +73,15 @@ class YouTrackApiClient(
                 setBody(request)
             }
 
-            println("   response.status: ${response.status.value}")
-
             response.body()
         } catch (e: Exception) {
-            println("   error: ${e.message}")
+            println("--- !!! ApiClient: createIssue() error !!! ---\n${e.message}")
             null
         }
     }
 
     suspend fun getProjectIdByName(shortName: String): ProjectIdReference? {
         return try {
-            println("\n--- ApiClient: getProjectIdByName() ---")
             val response = client.get("$baseUrl/api/admin/projects") {
                 accept(ContentType.Application.Json)
                 bearerAuth(token)
@@ -97,8 +90,6 @@ class YouTrackApiClient(
                     "id,shortName"
                 )
             }
-
-            println("   response.status: ${response.status.value}")
 
             val found = response.body<List<ProjectReference>>().find {
                 it.shortName == shortName
@@ -109,7 +100,7 @@ class YouTrackApiClient(
                 null
             }
         } catch (e: Exception) {
-            println("   error: ${e.message}")
+            println("--- !!! ApiClient: getProjectIdByName() error !!! ---\n${e.message}")
             null
         }
     }
